@@ -3,6 +3,7 @@
   "description": ["Default Renovate preset for Polarion Java repos"],
   "extends": [
     "config:recommended",
+    "helpers:pinGitHubActionDigests",
     ":prNotPending",
     ":semanticCommits",
     ":enablePreCommit"
