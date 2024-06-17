@@ -30,6 +30,14 @@
       "matchDepTypes": ["provided", "runtime"],
       "excludePackagePatterns": ["sbb"],
       "enabled": false
+    },
+    {
+      "matchManagers": [
+        "pre-commit"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true
     }
   ],
   "hostRules": [
