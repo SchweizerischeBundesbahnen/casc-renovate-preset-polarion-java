@@ -41,6 +41,7 @@
       "ignoreTests": true
     }
   ],
+  "platformAutomerge": true,
   "hostRules": [
     {
       "matchHost": "https://maven.pkg.github.com",
