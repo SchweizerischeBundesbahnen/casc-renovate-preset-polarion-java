@@ -12,9 +12,7 @@
     {
       "matchManagers": ["maven"],
       "registryUrls": [
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extensions.ch.sbb.polarion.extension.generic",
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extensions.ch.sbb.polarion.extension.generic.app",
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extensions.ch.sbb.polarion.extension.generic.parent-pom",
+        "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
         "https://repo.maven.apache.org/maven2"
       ],
       "allowedVersions": "!/-jboss-|-redhat-|redhat-|-jenkins-|-patch-|-atlassian-|-NODEP$|-atlassian$|-jbossorg-|-SNAPSHOT$|-PFD-|-jbossas-|-does-not-exist|-tc$|-jahia1$/"
@@ -22,9 +20,7 @@
     {
       "matchManagers": ["maven"],
       "registryUrls": [
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extensions.ch.sbb.polarion.extension.generic",
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extensions.ch.sbb.polarion.extension.generic.app",
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extensions.ch.sbb.polarion.extension.generic.parent-pom",
+        "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
         "https://repo.maven.apache.org/maven2"
       ],
       "matchDepTypes": ["provided", "runtime"],
@@ -36,8 +32,19 @@
         "pre-commit"
       ],
       "automerge": true,
-      "automergeType": "branch",
-      "ignoreTests": true
+      "automergeType": "branch"
+    },
+    {
+      "description": "Automerge non-major updates",
+      "matchUpdateTypes": ["patch", "pin", "digest"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true,
+      "automergeType": "branch"
     }
   ],
   "platformAutomerge": true,
