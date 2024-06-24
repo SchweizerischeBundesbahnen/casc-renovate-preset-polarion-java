@@ -47,11 +47,5 @@
       "automergeType": "branch"
     }
   ],
-  "platformAutomerge": true,
-  "hostRules": [
-    {
-      "matchHost": "https://maven.pkg.github.com",
-      "token": "wcFMA/xDdHCJBTolAQ/+JQWCZMi3U1W0DZd2l7ygTNOPRiCykRcMEMXPd5j4H0na0ka8es7SJVB2272uKKR8iNvZtmWAx9+JQLmVDsDPQNXB2LjcealOVB54B7Bx7nLxq35j1R5a01Z5yc9H3RCPkVy73SDrB3bMpslQaHea0CGmJtC7cpWbG2HkEqNmy/OTV//rq910WRKt3Lli4bizXEY3RuOZVYNU7wWGjJ9ti3Gol6P7o1tOqJ+7DajuGC9WIaN5VrPZpI8+Y++kcPUap/7bs6nXzGAxT+NhnHdtPBFwRh2x8hMfCq/ClFBLlPrgdQCQwt5tkUQEkqBrpgCSVIkgje/2ULZnbbwVmUXN6ksq2LOx4KzpejxztmZ3x3vkOgLAe1EymbcL5jU4Zr5hSNif1n440UMkU7AqRnqWH6AQ8/Z7NdC20DQ+czbLhOhafRbXFhtR2uPvYG4ZPKELVRLB93XRHUUilsuNjZoWhkOWILUCAwsGJQjAfGJvpGqDhfx7eg258Dj3dlv1oQyCeNoDcAUjiANDSisANH2Tj7d/2F22pCl0TKCrCo0fESTc0zo86LwvBjGLFAnL3OtKpvarnCK8zYbZpVc9FWkKEavFIHFnp5YUxtSreBeH3WykohEXk0RHlT4Mvmj+LWPfnb0PO/kjbOdA40C7nloQ6cm5Z0BBxJphXZ7+dOYxxwvSiQFivtHKq+Um7GB0KDcvuzZqCAuzmxm6fLtStx55cg8D9t9wthHLdmHIg+L1wBaY36ziklcVZImRYQxRLAW5zJDmoA8mPcFDJnvRJSHTagyHe8iZbcoqP/KvZ0fknV/5XituYEI7QrJFnHGyomvSYgTihMusJcKqOx+RDxFICiK0ocXBJ7uQRbTp"
-    }
-  ]
+  "platformAutomerge": true
 }
