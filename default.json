@@ -28,13 +28,6 @@
       "enabled": false
     },
     {
-      "matchManagers": [
-        "pre-commit"
-      ],
-      "automerge": true,
-      "automergeType": "branch"
-    },
-    {
       "description": "Automerge non-major updates",
       "matchUpdateTypes": [
         "minor",
