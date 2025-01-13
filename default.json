@@ -5,10 +5,11 @@
   ],
   "extends": [
     "config:best-practices",
-    ":prNotPending",
     ":semanticCommits",
     ":enablePreCommit"
   ],
+  "automergeType": "branch",
+  "platformAutomerge": true,
   "packageRules": [
     {
       "matchManagers": ["maven"],
@@ -32,8 +33,7 @@
       "matchManagers": [
         "pre-commit"
       ],
-      "automerge": true,
-      "automergeType": "branch"
+      "automerge": true
     },
     {
       "description": "Automerge non-major updates",
@@ -43,16 +43,13 @@
         "pin",
         "digest"
       ],
-      "automerge": true,
-      "automergeType": "branch"
+      "automerge": true
     },
     {
       "matchDepTypes": [
         "devDependencies"
       ],
-      "automerge": true,
-      "automergeType": "branch"
+      "automerge": true
     }
-  ],
-  "platformAutomerge": true
+  ]
 }
