@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": [
-    "Default Renovate preset for Polarion Java repos"
+    "Default Renovate preset for Polarion Java repos (with Node.js support)"
   ],
   "extends": [
     "config:best-practices",
@@ -13,6 +13,7 @@
   "prCreation": "not-pending",
   "packageRules": [
     {
+      "description": "Maven packages from SBB and Maven Central",
       "matchManagers": ["maven"],
       "registryUrls": [
         "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
@@ -21,6 +22,7 @@
       "allowedVersions": "!/-jboss-|-redhat-|redhat-|-jenkins-|-patch-|-atlassian-|-NODEP$|-atlassian$|-jbossorg-|-SNAPSHOT$|-PFD-|-jbossas-|-does-not-exist|-tc$|-jahia1$/"
     },
     {
+      "description": "Disable provided and runtime Maven dependencies (except SBB packages)",
       "matchManagers": ["maven"],
       "registryUrls": [
         "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
@@ -31,6 +33,11 @@
       "enabled": false
     },
     {
+      "description": "Node.js packages configuration",
+      "matchManagers": ["npm", "yarn", "pnpm"]
+    },
+    {
+      "description": "Automerge pre-commit hooks",
       "matchManagers": [
         "pre-commit"
       ],
@@ -47,6 +54,7 @@
       "automerge": true
     },
     {
+      "description": "Automerge dev dependencies",
       "matchDepTypes": [
         "devDependencies"
       ],
