@@ -34,7 +34,9 @@
     },
     {
       "description": "Node.js packages configuration",
-      "matchManagers": ["npm", "yarn", "pnpm"]
+      "matchManagers": ["npm", "yarn", "pnpm"],
+      "enabled": true,
+      "rangeStrategy": "auto"
     },
     {
       "description": "Automerge pre-commit hooks",
