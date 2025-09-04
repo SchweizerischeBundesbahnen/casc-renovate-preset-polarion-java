@@ -35,7 +35,8 @@
     {
       "description": "Automerge pre-commit hooks",
       "matchManagers": [
-        "pre-commit"
+        "pre-commit",
+        "github-actions"
       ],
       "automerge": true
     },
