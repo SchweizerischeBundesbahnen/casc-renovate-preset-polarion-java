@@ -8,6 +8,13 @@
     ":semanticCommits",
     ":enablePreCommit"
   ],
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
   "automergeType": "branch",
   "platformAutomerge": true,
   "prCreation": "not-pending",
