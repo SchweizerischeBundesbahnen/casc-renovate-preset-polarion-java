@@ -12,6 +12,7 @@
     "enabled": true,
     "schedule": ["before 6am on monday"]
   },
+  "minimumReleaseAge": "1 day",
   "automergeType": "branch",
   "platformAutomerge": true,
   "prCreation": "not-pending",
