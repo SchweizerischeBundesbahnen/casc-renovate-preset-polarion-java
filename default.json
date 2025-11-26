@@ -14,10 +14,11 @@
     "schedule": ["before 6am on monday"],
     "minimumReleaseAge": null
   },
-  "minimumReleaseAge": "1 day",
+  "minimumReleaseAge": "3 days",
   "automergeType": "branch",
   "platformAutomerge": true,
-  "prCreation": "not-pending",
+  "prCreation": "status-success",
+  "rebaseWhen": "behind-base-branch",
   "packageRules": [
     {
       "description": "Maven packages from SBB and Maven Central",
