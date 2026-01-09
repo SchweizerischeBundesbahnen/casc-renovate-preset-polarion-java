@@ -8,40 +8,22 @@
     ":semanticCommits",
     ":enablePreCommit"
   ],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true,
-    "schedule": ["before 6am on monday"],
-    "minimumReleaseAge": null
-  },
-  "minimumReleaseAge": "3 days",
   "automergeType": "branch",
   "platformAutomerge": true,
   "prCreation": "status-success",
   "rebaseWhen": "behind-base-branch",
+  "minimumReleaseAge": "3 days",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": [
+      "before 6am on monday"
+    ],
+    "minimumReleaseAge": null
+  },
   "packageRules": [
     {
-      "description": "Maven packages from SBB and Maven Central",
-      "matchManagers": ["maven"],
-      "registryUrls": [
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
-        "https://repo.maven.apache.org/maven2"
-      ],
-      "allowedVersions": "!/-jboss-|-redhat-|redhat-|-jenkins-|-patch-|-atlassian-|-NODEP$|-atlassian$|-jbossorg-|-SNAPSHOT$|-PFD-|-jbossas-|-does-not-exist|-tc$|-jahia1$/"
-    },
-    {
-      "description": "Disable provided and runtime Maven dependencies (except SBB packages)",
-      "matchManagers": ["maven"],
-      "registryUrls": [
-        "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
-        "https://repo.maven.apache.org/maven2"
-      ],
-      "matchDepTypes": ["provided", "runtime"],
-      "excludePackagePatterns": ["sbb"],
-      "enabled": false
-    },
-    {
-      "description": "Automerge pre-commit hooks",
+      "description": "Automerge all update",
       "matchManagers": [
         "pre-commit",
         "github-actions"
@@ -49,11 +31,47 @@
       "automerge": true
     },
     {
-      "description": "Automerge dev dependencies",
-      "matchDepTypes": [
-        "devDependencies"
+      "description": "Maven packages from SchweizerischeBundesbahnen and Maven Central",
+      "matchManagers": [
+        "maven"
       ],
-      "automerge": true
+      "registryUrls": [
+        "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
+        "https://repo.maven.apache.org/maven2"
+      ],
+      "allowedVersions": "!/-jboss-|-redhat-|redhat-|-jenkins-|-patch-|-atlassian-|-NODEP$|-atlassian$|-jbossorg-|-SNAPSHOT$|-PFD-|-jbossas-|-does-not-exist|-tc$|-jahia1$/"
+    },
+    {
+      "description": "Maven - Disable provided/runtime deps except SBB packages",
+      "matchManagers": [
+        "maven"
+      ],
+      "registryUrls": [
+        "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
+        "https://repo.maven.apache.org/maven2"
+      ],
+      "matchDepTypes": [
+        "provided",
+        "runtime"
+      ],
+      "excludePackagePatterns": [
+        "sbb"
+      ],
+      "enabled": false
+    },
+
+    {
+      "description": "SBB packages - Automerge minor/patch immediately",
+      "matchPackagePatterns": [
+        "^ch\\.sbb\\.",
+        "^python-sbb-polarion$"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "minimumReleaseAge": "0 days"
     },
     {
       "description": "Automerge non-major updates",
@@ -64,6 +82,29 @@
         "digest"
       ],
       "automerge": true
+    },
+    {
+      "description": "Major updates require manual review",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Vulnerability alerts get highest priority",
+      "matchCategories": [
+        "security"
+      ],
+      "prPriority": 99
     }
-  ]
+  ],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "security"
+    ],
+    "automerge": false,
+    "minimumReleaseAge": "0 days"
+  }
 }
