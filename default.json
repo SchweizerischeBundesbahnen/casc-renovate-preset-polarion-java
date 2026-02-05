@@ -28,7 +28,8 @@
         "pre-commit",
         "github-actions"
       ],
-      "automerge": true
+      "automerge": true,
+      "minimumReleaseAge": null
     },
     {
       "description": "Maven packages from SchweizerischeBundesbahnen and Maven Central",
