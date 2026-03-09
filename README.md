@@ -31,8 +31,8 @@ That's it! Renovate will now:
 |-----------|----------------|-----------|-------------|
 | **Java** | Maven (pom.xml) | - | Minor/patch (3-day wait) |
 | **Node.js** | npm (package.json) | package-lock.json | Minor/patch (3-day wait) |
-| **Pre-commit** | .pre-commit-config.yaml | - | All updates |
-| **GitHub Actions** | .github/workflows/*.yml | - | All updates |
+| **Pre-commit** | .pre-commit-config.yaml | - | All updates incl. major |
+| **GitHub Actions** | .github/workflows/*.yml | - | All updates incl. major |
 
 ---
 
@@ -42,7 +42,7 @@ That's it! Renovate will now:
 
 **Automatic merging for low-risk updates:**
 - Minor/patch updates (1.2.x -> 1.3.0) with **3-day waiting period**
-- Pre-commit hooks and GitHub Actions (all updates)
+- Pre-commit hooks and GitHub Actions (all updates including major versions)
 - **Internal SBB packages** (minor/patch, **immediate** - no waiting):
   - `ch.sbb.*` Maven packages
   - `python-sbb-polarion` Python package
@@ -54,7 +54,7 @@ That's it! Renovate will now:
 ### Security & Vulnerability Management
 
 - **OSV Vulnerability Alerts**: Immediate PRs for dependencies with security issues
-- **Priority Handling**: Security PRs created first (`prPriority: 99`)
+- **Priority Handling**: Security PRs jump rate limit queue (`prPriority: 99`)
 - **Zero-Delay Fixes**: No waiting period for security updates
 - **Security Labels**: All vulnerability PRs labeled `security`
 - **Version Filtering**: Blocks unstable/snapshot releases (Maven)
