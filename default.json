@@ -9,6 +9,7 @@
   "automergeType": "branch",
   "platformAutomerge": true,
   "prCreation": "status-success",
+  "internalChecksFilter": "strict",
   "rebaseWhen": "behind-base-branch",
   "minimumReleaseAge": "3 days",
   "lockFileMaintenance": {
