@@ -97,7 +97,7 @@
       "ignoreTests": true
     },
     {
-      "description": "Vulnerability alerts get highest priority",
+      "description": "Vulnerability alerts get highest priority to jump rate limit queue (prHourlyLimit/prConcurrentLimit)",
       "matchCategories": [
         "security"
       ],
