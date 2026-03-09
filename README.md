@@ -1,8 +1,6 @@
 # casc-renovate-preset-polarion-java
 
-**Renovate configuration preset for Polarion Java repositories on GitHub**
-
-Dependency management for Java (Maven), Node.js (npm), pre-commit hooks, and GitHub Actions with smart automerge and security-first defaults.
+**Renovate preset for Polarion Java repositories on GitHub**
 
 Extends [casc-renovate-preset-polarion](https://github.com/SchweizerischeBundesbahnen/casc-renovate-preset-polarion) (shared base) and adds Maven-specific configuration.
 
@@ -19,60 +17,51 @@ Add this to your repository's `renovate.json`:
 }
 ```
 
-That's it! Renovate will now:
-- Automatically update dependencies across supported ecosystems
-- Auto-merge safe updates (minor/patch, dev dependencies, pre-commit hooks)
-- Alert on security vulnerabilities with priority PRs
-- Maintain lock files weekly
-
 ---
 
 ## Supported Ecosystems
 
 | Ecosystem | Package Manager | Lock File | Auto-Update |
 |-----------|----------------|-----------|-------------|
-| **Java** | Maven (pom.xml) | - | Minor/patch (3-day wait) |
+| **Java** | Maven (pom.xml) | — | Minor/patch (3-day wait) |
 | **Node.js** | npm (package.json) | package-lock.json | Minor/patch (3-day wait) |
-| **Pre-commit** | .pre-commit-config.yaml | - | All updates incl. major |
-| **GitHub Actions** | .github/workflows/*.yml | - | All updates incl. major |
+| **Pre-commit** | .pre-commit-config.yaml | — | All updates incl. major (grouped) |
+| **GitHub Actions** | .github/workflows/*.yml | — | All updates incl. major (grouped) |
+
+**All managers are enabled** — unlike the Python/Docker presets, no `enabledManagers` whitelist is used. Maven-specific rules are configured explicitly while all other managers inherit sensible defaults, keeping the preset future-proof.
 
 ---
 
-## Features
+## Automerge Strategy
 
-### Smart Automerge Strategy
+Inherited from the [shared base preset](https://github.com/SchweizerischeBundesbahnen/casc-renovate-preset-polarion). See base preset for full details.
 
-**Automatic merging for low-risk updates:**
-- Minor/patch updates (1.2.x -> 1.3.0) with **3-day waiting period**
-- Pre-commit hooks and GitHub Actions (all updates including major versions)
-- **Internal SBB packages** (minor/patch, **immediate** - no waiting):
-  - `ch.sbb.*` Maven packages
-  - `python-sbb-polarion` Python package
+| Update Type | Automerged? | Stabilization | Notes |
+|-------------|-------------|---------------|-------|
+| Minor/patch | ✅ Yes | 3 days | Requires CI to pass |
+| Major | ❌ No | — | Manual review required |
+| GitHub Actions (any incl. major) | ✅ Yes | 3 days | Grouped into one branch/PR |
+| Pre-commit hooks (any incl. major) | ✅ Yes | 3 days | Grouped into one branch/PR, ignoreTests: true |
+| SBB internal packages (minor/patch) | ✅ Yes | 0 days | `ch.sbb.*` and `python-sbb-polarion` |
+| Security vulnerabilities | ❌ No | 0 days | Labeled `security`, priority queue |
+| Lock file maintenance | ✅ Yes | — | Monday before 4am |
 
-**Manual review required for:**
-- Major updates (1.x -> 2.x)
-- Security vulnerabilities (labeled for priority)
+---
 
-### Security & Vulnerability Management
+## Maven Configuration
 
-- **OSV Vulnerability Alerts**: Immediate PRs for dependencies with security issues
-- **Priority Handling**: Security PRs jump rate limit queue (`prPriority: 99`)
-- **Zero-Delay Fixes**: No waiting period for security updates
-- **Security Labels**: All vulnerability PRs labeled `security`
-- **Version Filtering**: Blocks unstable/snapshot releases (Maven)
+### Registries
 
-### Registry Configuration
-
-**Maven packages sourced from:**
+Maven packages are sourced from:
 - GitHub Packages (`maven.pkg.github.com/SchweizerischeBundesbahnen`) — internal SBB packages
 - Maven Central (`repo.maven.apache.org/maven2`) — open-source dependencies
 
-### Maven Version Filtering
+### Version Filtering
 
 Unstable and vendor-specific versions are blocked:
 
-| Pattern | Examples | Reason |
-|---------|----------|--------|
+| Pattern | Example | Reason |
+|---------|---------|--------|
 | `-SNAPSHOT$` | `1.0-SNAPSHOT` | Unstable builds |
 | `-redhat-`, `-jboss-` | `1.0-redhat-1` | Vendor forks |
 | `-jenkins-` | `1.0-jenkins-1` | CI-specific builds |
@@ -80,36 +69,13 @@ Unstable and vendor-specific versions are blocked:
 | `-tc$` | `1.0-tc` | Tomcat variants |
 | `-NODEP$` | `1.0-NODEP` | No-dependency variants |
 
-### Why No `enabledManagers`
+### Provided/Runtime Scope
 
-Unlike the Python/Docker presets, this preset does **not** use `enabledManagers`. The whitelist approach would silently disable all managers not listed (including github-actions, npm, pre-commit). Instead, Maven-specific rules are configured explicitly while all other managers inherit sensible defaults — making the preset future-proof for any technology a consuming repo might use.
-
-### Lock File Maintenance
-
-**Automated weekly refresh** (Monday before 4am):
-- npm `package-lock.json` - Transitive dependency updates
-- Auto-merged (low risk)
-
-### Semantic Commits
-
-All PRs use conventional commit format:
-```
-chore(deps): update spring-boot to 3.2.1
-fix(deps): update log4j to resolve CVE-2024-1234
-```
+`provided` and `runtime` scope dependencies are disabled by default (except `ch.sbb.*` packages) to avoid unwanted updates to container-provided dependencies.
 
 ---
 
 ## Configuration Examples
-
-### Basic Usage (Most Common)
-
-```json
-{
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion-java"]
-}
-```
 
 ### Override Automerge for Specific Package
 
@@ -126,16 +92,6 @@ fix(deps): update log4j to resolve CVE-2024-1234
 }
 ```
 
-### Disable Automerge Entirely
-
-```json
-{
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion-java"],
-  "automerge": false
-}
-```
-
 ### Custom Schedule
 
 ```json
@@ -148,90 +104,18 @@ fix(deps): update log4j to resolve CVE-2024-1234
 
 ---
 
-## What You'll See
-
-### Pull Request Examples
-
-**Auto-merged patch update:**
-```
-chore(deps): update junit to 5.10.1
-
-- Type: patch
-- Auto-merge: enabled
-- Release age: 5 days
-```
-
-**Manual review required (major):**
-```
-chore(deps): update spring-boot to 4.0.0
-
-- Type: major
-- Auto-merge: disabled
-- Breaking changes detected
-```
-
-**Security alert:**
-```
-fix(deps): update log4j to 2.17.1
-
-- Type: patch
-- Labels: security
-- CVE-2024-1234
-- Auto-merge: disabled (requires review)
-```
-
----
-
 ## Troubleshooting
-
-### No PRs appearing
-
-**Check:**
-1. Is `renovate.json` in repository root?
-2. Is Renovate GitHub App installed on the repository?
-3. Check Renovate logs in the Dependency Dashboard issue
-
-### Too many automerges
-
-**Solution:** Disable automerge for specific packages:
-```json
-{
-  "extends": ["github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion-java"],
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["^org.springframework"],
-      "automerge": false
-    }
-  ]
-}
-```
 
 ### Maven snapshots appearing
 
-**This shouldn't happen** - preset filters snapshots. If you see them:
+**This shouldn't happen** — preset filters snapshots. If you see them:
 1. Check preset is correctly extended
 2. Verify no local override of `allowedVersions`
-3. Report issue to preset maintainers
+3. Open an issue in this repository
 
 ---
 
 ## Developer Setup
-
-### Prerequisites
-
-- Node.js (for `renovate-config-validator`)
-- Python 3.11+ (for pre-commit)
-- jq (for JSON validation)
-
-### Installation
-
-```bash
-# Install pre-commit hooks
-pip install pre-commit
-pre-commit install
-```
-
-### Validation
 
 ```bash
 # JSON syntax check
@@ -244,66 +128,14 @@ npx -p renovate renovate-config-validator default.json
 pre-commit run --all-files
 ```
 
-### Testing Changes
-
-This repository tests itself (dogfooding):
-
-1. **Edit `default.json`**
-2. **Validate:** `npx -p renovate renovate-config-validator default.json`
-3. **Commit changes** (pre-commit hooks run automatically)
-4. **Observe:** Renovate will create PRs in this repo using the new config
-5. **Verify:** Check PR behavior before merging to main
-
 ---
 
-## Deployment Warning
+## Deployment
 
-**CRITICAL:** Changes to `default.json` are **live immediately** when merged to main.
+Changes to `default.json` are **live immediately** when merged to `main`. All consuming repositories receive updates on the next Renovate run — there is no staging environment.
 
-- All consuming repositories see changes on next Renovate run
-- No staging environment
-- No rollback mechanism
-
-**Best Practices:**
-1. Validate locally: `renovate-config-validator default.json`
-2. Test with small changes first
-3. Monitor consuming repos after deployment
-
----
-
-## Documentation
-
-- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Technical deep-dive, automerge strategy, registry configuration
-- **[CHANGELOG.md](./CHANGELOG.md)** - Version history and changes
-
----
-
-## Comparison: Before vs After
-
-| Feature | Without Preset | With This Preset |
-|---------|---------------|------------------|
-| Registry config | Manual per repo | Auto-configured |
-| Automerge | Generic (may be unsafe) | Risk-based strategy |
-| Maven snapshots | Included (unwanted) | Filtered out |
-| Lock file maintenance | Manual | Weekly automated |
-| Security alerts | Not labeled | Labeled `security` |
-| Release stability | Immediate updates | 3-day minimum age |
-
----
-
-## Contributing
-
-1. **Validate locally** (see Developer Setup)
-2. **Test with `renovate.json`** in this repo
-3. **Update documentation** for user-facing changes
-4. **Run pre-commit:** `pre-commit run --all-files`
-5. **Create PR with clear description**
-
-### Questions or Issues?
-
-Open an issue in this GitHub repository.
+Changes to the [shared base preset](https://github.com/SchweizerischeBundesbahnen/casc-renovate-preset-polarion) also affect all repos using this preset.
 
 ---
 
 **Maintained by:** SBB Polarion Team
-**Last Updated:** 2026-01-09
