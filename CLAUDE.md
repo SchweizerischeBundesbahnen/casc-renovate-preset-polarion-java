@@ -12,6 +12,8 @@ This file provides guidance for AI assistants (like Claude Code) working on this
 
 **Target Platform:** GitHub SchweizerischeBundesbahnen
 
+**Architecture:** Extends [casc-renovate-preset-polarion](https://github.com/SchweizerischeBundesbahnen/casc-renovate-preset-polarion) (shared base preset) and adds only Maven-specific configuration. All shared rules (automerge strategy, security, lockfile maintenance, etc.) live in the base preset.
+
 ## Repository Architecture
 
 ```

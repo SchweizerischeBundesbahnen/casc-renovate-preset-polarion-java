@@ -1,25 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Default Renovate preset for Polarion Java repos (with Node.js support)",
+  "description": "Renovate preset for Polarion Java repositories maintained by the SBB Polarion Team",
   "extends": [
-    "config:best-practices",
-    ":semanticCommits",
-    ":enablePreCommit"
+    "github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion"
   ],
-  "automergeType": "branch",
-  "platformAutomerge": true,
-  "prCreation": "status-success",
-  "internalChecksFilter": "strict",
-  "rebaseWhen": "behind-base-branch",
-  "minimumReleaseAge": "3 days",
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true,
-    "schedule": [
-      "before 6am on monday"
-    ],
-    "minimumReleaseAge": null
-  },
   "packageRules": [
     {
       "description": "Maven packages from SchweizerischeBundesbahnen and Maven Central",
@@ -50,7 +34,6 @@
       ],
       "enabled": false
     },
-
     {
       "description": "SBB packages - Automerge minor/patch immediately",
       "matchPackagePatterns": [
@@ -63,54 +46,6 @@
       ],
       "automerge": true,
       "minimumReleaseAge": "0 days"
-    },
-    {
-      "description": "Automerge non-major updates",
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "automerge": true
-    },
-    {
-      "description": "Major updates require manual review",
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "automerge": false
-    },
-    {
-      "description": "Automerge GitHub Actions updates including major versions",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "automerge": true
-    },
-    {
-      "description": "Automerge pre-commit updates including major versions (ignoreTests: low-risk tooling)",
-      "matchManagers": [
-        "pre-commit"
-      ],
-      "automerge": true,
-      "ignoreTests": true
-    },
-    {
-      "description": "Vulnerability alerts get highest priority to jump rate limit queue (prHourlyLimit/prConcurrentLimit)",
-      "matchCategories": [
-        "security"
-      ],
-      "prPriority": 99
     }
-  ],
-  "osvVulnerabilityAlerts": true,
-  "vulnerabilityAlerts": {
-    "enabled": true,
-    "labels": [
-      "security"
-    ],
-    "automerge": false,
-    "minimumReleaseAge": "0 days"
-  }
+  ]
 }

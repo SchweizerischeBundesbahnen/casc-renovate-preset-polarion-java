@@ -4,6 +4,8 @@
 
 Dependency management for Java (Maven), Node.js (npm), pre-commit hooks, and GitHub Actions with smart automerge and security-first defaults.
 
+Extends [casc-renovate-preset-polarion](https://github.com/SchweizerischeBundesbahnen/casc-renovate-preset-polarion) (shared base) and adds Maven-specific configuration.
+
 ---
 
 ## Quick Start
@@ -62,12 +64,29 @@ That's it! Renovate will now:
 ### Registry Configuration
 
 **Maven packages sourced from:**
-- GitHub Packages (`maven.pkg.github.com/SchweizerischeBundesbahnen`)
-- Maven Central (`repo.maven.apache.org/maven2`)
+- GitHub Packages (`maven.pkg.github.com/SchweizerischeBundesbahnen`) — internal SBB packages
+- Maven Central (`repo.maven.apache.org/maven2`) — open-source dependencies
+
+### Maven Version Filtering
+
+Unstable and vendor-specific versions are blocked:
+
+| Pattern | Examples | Reason |
+|---------|----------|--------|
+| `-SNAPSHOT$` | `1.0-SNAPSHOT` | Unstable builds |
+| `-redhat-`, `-jboss-` | `1.0-redhat-1` | Vendor forks |
+| `-jenkins-` | `1.0-jenkins-1` | CI-specific builds |
+| `-atlassian-` | `1.0-atlassian-1` | Vendor forks |
+| `-tc$` | `1.0-tc` | Tomcat variants |
+| `-NODEP$` | `1.0-NODEP` | No-dependency variants |
+
+### Why No `enabledManagers`
+
+Unlike the Python/Docker presets, this preset does **not** use `enabledManagers`. The whitelist approach would silently disable all managers not listed (including github-actions, npm, pre-commit). Instead, Maven-specific rules are configured explicitly while all other managers inherit sensible defaults — making the preset future-proof for any technology a consuming repo might use.
 
 ### Lock File Maintenance
 
-**Automated weekly refresh** (Monday before 6am):
+**Automated weekly refresh** (Monday before 4am):
 - npm `package-lock.json` - Transitive dependency updates
 - Auto-merged (low risk)
 
