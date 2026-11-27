@@ -142,18 +142,19 @@ LOW RISK (Immediate automerge):
 
 ### Registry Configuration
 
-**Pattern:** GitHub Packages + Maven Central for Maven dependencies.
+**Pattern:** GitHub Packages + the public JFrog repository + Maven Central for Maven dependencies.
 
 **Why This Configuration?**
 1. GitHub Packages first for internal SBB packages
-2. Maven Central fallback for open-source dependencies
-3. No Artifactory required in GitHub environment
+2. The public JFrog repository for the SBB Polarion open-source extensions, which are published there instead of Maven Central (readable without authentication, so no host rule is needed)
+3. Maven Central fallback for open-source dependencies
 
 **Example:**
 ```json
 {
   "registryUrls": [
     "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
+    "https://sbb.jfrog.io/artifactory/polarion-opensource-mvn",
     "https://repo.maven.apache.org/maven2"
   ]
 }
@@ -172,6 +173,7 @@ LOW RISK (Immediate automerge):
 
 **Allowed:**
 - `maven.pkg.github.com/SchweizerischeBundesbahnen` (GitHub Packages)
+- `sbb.jfrog.io/artifactory/polarion-opensource-mvn` (public JFrog repository, anonymous read by design)
 - `repo.maven.apache.org/maven2` (Maven Central)
 - Generic examples (PROJECT/repo, user@example.com)
 
