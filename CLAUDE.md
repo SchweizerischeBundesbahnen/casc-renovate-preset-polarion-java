@@ -146,7 +146,7 @@ LOW RISK (Immediate automerge):
 
 **Why This Configuration?**
 1. GitHub Packages first for internal SBB packages
-2. The public JFrog repository for the SBB Polarion open-source extensions, which are published there instead of Maven Central (readable without authentication, so no host rule is needed)
+2. The public JFrog repository for the SBB Polarion open-source extensions, which are moving there from Maven Central, generic first; earlier versions stay on Maven Central (readable without authentication, so no host rule is needed)
 3. Maven Central fallback for open-source dependencies
 
 **Example:**
@@ -207,7 +207,7 @@ feat: add uv package manager support
 ### Maven (Java)
 
 **Configuration Highlights:**
-- GitHub Packages + Maven Central registries
+- GitHub Packages + the public JFrog repository + Maven Central registries
 - Extensive version filtering (no -SNAPSHOT, -jboss-, etc.)
 - Disabled provided/runtime deps (except SBB packages)
 - Automerge: minor/patch updates (3-day wait), SBB packages (immediate)
