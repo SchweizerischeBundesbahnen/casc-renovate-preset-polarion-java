@@ -54,6 +54,7 @@ Inherited from the [shared base preset](https://github.com/SchweizerischeBundesb
 
 Maven packages are sourced from:
 - GitHub Packages (`maven.pkg.github.com/SchweizerischeBundesbahnen`) — internal SBB packages
+- Public JFrog repository (`sbb.jfrog.io/artifactory/polarion-opensource-mvn`) — SBB Polarion open-source extensions, readable without authentication
 - Maven Central (`repo.maven.apache.org/maven2`) — open-source dependencies
 
 ### Version Filtering

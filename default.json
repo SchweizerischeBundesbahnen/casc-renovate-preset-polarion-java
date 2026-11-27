@@ -6,12 +6,13 @@
   ],
   "packageRules": [
     {
-      "description": "Maven packages from SchweizerischeBundesbahnen and Maven Central",
+      "description": "Maven packages from SchweizerischeBundesbahnen (GitHub Packages and the public JFrog repository) and Maven Central",
       "matchManagers": [
         "maven"
       ],
       "registryUrls": [
         "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
+        "https://sbb.jfrog.io/artifactory/polarion-opensource-mvn",
         "https://repo.maven.apache.org/maven2"
       ],
       "allowedVersions": "!/-jboss-|-redhat-|redhat-|-jenkins-|-patch-|-atlassian-|-NODEP$|-atlassian$|-jbossorg-|-SNAPSHOT$|-PFD-|-jbossas-|-does-not-exist|-tc$|-jahia1$/"
@@ -23,6 +24,7 @@
       ],
       "registryUrls": [
         "https://maven.pkg.github.com/SchweizerischeBundesbahnen",
+        "https://sbb.jfrog.io/artifactory/polarion-opensource-mvn",
         "https://repo.maven.apache.org/maven2"
       ],
       "matchDepTypes": [
